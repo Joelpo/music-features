@@ -44,16 +44,17 @@ def callback():
 
     # BACK END CALL
     sp = spotipy.Spotify(session['auth_header'])
+    session['user_id'] = sp.me()['id']
     user_data = data_fetch(sp)
 
     # CACHING
-    cache['top_user_tracks_short_term'] = user_data['top_user_tracks_short_term'].to_json()
-    cache['top_user_tracks_medium_term'] = user_data['top_user_tracks_medium_term'].to_json()
-    cache['top_user_tracks_long_term'] = user_data['top_user_tracks_long_term'].to_json()
-    cache['top_user_artists_short_term'] = user_data['top_user_artists_short_term'].to_json()
-    cache['top_user_artists_medium_term'] = user_data['top_user_artists_medium_term'].to_json()
-    cache['top_user_artists_long_term'] = user_data['top_user_artists_long_term'].to_json()
-    cache['user_playlists'] = user_data['user_playlists'].to_json()
+    cache['{}/top_user_tracks_short_term'.format(session['user_id'])] = user_data['top_user_tracks_short_term'].to_json()
+    cache['{}/top_user_tracks_medium_term'.format(session['user_id'])] = user_data['top_user_tracks_medium_term'].to_json()
+    cache['{}/top_user_tracks_long_term'.format(session['user_id'])] = user_data['top_user_tracks_long_term'].to_json()
+    cache['{}/top_user_artists_short_term'.format(session['user_id'])] = user_data['top_user_artists_short_term'].to_json()
+    cache['{}/top_user_artists_medium_term'.format(session['user_id'])] = user_data['top_user_artists_medium_term'].to_json()
+    cache['{}/top_user_artists_long_term'.format(session['user_id'])] = user_data['top_user_artists_long_term'].to_json()
+    cache['{}/user_playlists'.format(session['user_id'])] = user_data['user_playlists'].to_json()
     # print(session['top_user_tracks_short_term'])
 
     return redirect("/dashboard/")
@@ -183,9 +184,9 @@ def display_page(pathname):
 
     if (data_requested in data_path_names):
         if(data_requested == 'dashboard'):
-            data_table = generate_table(pd.read_json(cache['top_user_tracks_long_term']))
+            data_table = generate_table(pd.read_json(cache['{}/top_user_tracks_long_term'.format(session['user_id'])]))
         else :
-            data_table = generate_table(pd.read_json(cache[data_requested]))
+            data_table = generate_table(pd.read_json(cache['{}/{}'.format(session['user_id'],data_requested)]))
 
     # return page content
     return html.Div([
