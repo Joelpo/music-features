@@ -35,8 +35,8 @@ CLIENT_SECRET = config.SPOTIPY_CLIENT_SECRET
 # server side parameter
 # * fell free to change it if you want to, but make sure to change in
 # your spotify dev account as well *
-CLIENT_SIDE_URL_ = config.CLIENT_SIDE_URL_DEV
-PORT = config.PORT_DEV
+CLIENT_SIDE_URL_ = config.CLIENT_SIDE_URL_PROD
+PORT = config.PORT_PROD
 REDIRECT_URI = "{}:{}/callback/".format(CLIENT_SIDE_URL, PORT)
 SCOPE = "playlist-modify-public playlist-modify-private user-read-recently-played user-top-read"
 STATE = ""
