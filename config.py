@@ -3,7 +3,7 @@ SPOTIPY_CLIENT_ID='13bd2082e7114503bf47d303b40be9eb'
 SPOTIPY_CLIENT_SECRET='fd0ab194641a45128c04dcf1df08c177'
 SCOPE='user-library-read playlist-read-private user-read-recently-played user-top-read'
 CLIENT_SIDE_URL_DEV='http://localhost'
-CLIENT_SIDE_URL_PROD='https://music-features.herokuapp.com/'
+CLIENT_SIDE_URL_PROD='http://music-features.herokuapp.com'
 PORT_DEV='5000'
 PORT_PROD='80'
 # Application variables
