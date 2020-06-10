@@ -1,0 +1,9 @@
+pandas
+numpy
+spotipy
+dash==1.12.0
+flask
+gunicorn
+dash_bootstrap_components
+u-msgpack-python
+#.$ pip install -r "requirements.txt"
