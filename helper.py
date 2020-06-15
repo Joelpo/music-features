@@ -4,6 +4,7 @@ import json
 import requests
 import sys
 import config
+import secret
 
 # Workaround to support both python 2 & 3
 try:
@@ -28,8 +29,8 @@ SPOTIFY_TOKEN_URL = SPOTIFY_AUTH_BASE_URL.format('api/token')
 # CLIENT_ID = CLIENT['id']
 # CLIENT_SECRET = CLIENT['secret']
 
-CLIENT_ID = config.SPOTIPY_CLIENT_ID
-CLIENT_SECRET = config.SPOTIPY_CLIENT_SECRET
+CLIENT_ID = secret.SPOTIPY_CLIENT_ID
+CLIENT_SECRET = secret.SPOTIPY_CLIENT_SECRET
 
 
 # server side parameter

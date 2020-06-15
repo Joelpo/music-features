@@ -8,18 +8,18 @@ from dash.dependencies import Input, Output, State
 import pandas as pd # PANDAS
 import spotipy # SPOTIPY
 from spotipy.oauth2 import SpotifyClientCredentials
-# LOCAL
-import config
-import helper
-from data_fetch import data_fetch
 import json
 from datetime import timedelta
-
+# LOCAL
+import config
+import secret
+import helper
+from data_fetch import data_fetch
 
 
 # initialise the app
 flask_app = Flask(__name__)
-flask_app.secret_key = config.FLASK_SECRET_KEY
+flask_app.secret_key = secret.FLASK_SECRET_KEY
 
 # flask_app.config['SESSION_PERMANENT'] = True
 # flask_app.config['SESSION_TYPE'] = 'filesystem'
@@ -42,9 +42,11 @@ def callback():
     auth_header = helper.authorize(auth_token)
     session['auth_header'] = auth_header
 
-    # BACK END CALL
+    # BACK END CALLS
     sp = spotipy.Spotify(session['auth_header'])
+    ## recover user ID
     session['user_id'] = sp.me()['id']
+    # Fetch Data
     user_data = data_fetch(sp)
 
     # CACHING
