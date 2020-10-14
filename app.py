@@ -21,16 +21,12 @@ from data_fetch import data_fetch
 flask_app = Flask(__name__)
 flask_app.secret_key = secret.FLASK_SECRET_KEY
 
-# flask_app.config['SESSION_PERMANENT'] = True
-# flask_app.config['SESSION_TYPE'] = 'filesystem'
-# flask_app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=5)
-
 app = dash.Dash(name=__name__,assets_folder=config.ASSETS_PATH,server=flask_app,external_stylesheets=[dbc.themes.LUX, config.fontawesome],url_base_pathname='/dashboard/')
 
 server = app.server
 
+# INITIALISE CACHE
 cache = {}
-
 
 @flask_app.route('/')
 def index():
