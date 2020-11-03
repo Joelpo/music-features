@@ -8,7 +8,8 @@ import secret
 
 # Workaround to support both python 2 & 3
 try:
-    import urllib.request, urllib.error
+    import urllib.request
+    import urllib.error
     import urllib.parse as urllibparse
 except ImportError:
     import urllib as urllibparse
@@ -34,10 +35,16 @@ CLIENT_SECRET = secret.SPOTIPY_CLIENT_SECRET
 
 
 # server side parameter
-# * fell free to change it if you want to, but make sure to change in
-# your spotify dev account as well *
-CLIENT_SIDE_URL = config.CLIENT_SIDE_URL_PROD
-PORT = config.PORT_PROD
+
+# DEV VS PROD -> CHANGE VARIABLE IN CONFIG TO DEVELOP
+if(config.PROD == 1):
+    CLIENT_SIDE_URL = config.CLIENT_SIDE_URL_PROD
+    PORT = config.PORT_PROD
+else:
+    CLIENT_SIDE_URL = config.CLIENT_SIDE_URL_DEV
+    PORT = config.PORT_DEV
+
+
 REDIRECT_URI = "{}:{}/callback/".format(CLIENT_SIDE_URL, PORT)
 SCOPE = "playlist-modify-public playlist-modify-private user-read-recently-played user-top-read"
 STATE = ""
@@ -54,13 +61,13 @@ auth_query_parameters = {
     "client_id": CLIENT_ID
 }
 
-#python 3
+# python 3
 if sys.version_info[0] >= 3:
     URL_ARGS = "&".join(["{}={}".format(key, urllibparse.quote(val))
-                    for key, val in list(auth_query_parameters.items())])
+                         for key, val in list(auth_query_parameters.items())])
 else:
     URL_ARGS = "&".join(["{}={}".format(key, urllibparse.quote(val))
-                    for key, val in auth_query_parameters.iteritems()])
+                         for key, val in auth_query_parameters.iteritems()])
 
 
 AUTH_URL = "{}/?{}".format(SPOTIFY_AUTH_URL, URL_ARGS)
@@ -83,12 +90,14 @@ def authorize(auth_token):
         "redirect_uri": REDIRECT_URI
     }
 
-    #python 3 or above
+    # python 3 or above
     if sys.version_info[0] >= 3:
-        base64encoded = base64.b64encode(("{}:{}".format(CLIENT_ID, CLIENT_SECRET)).encode())
+        base64encoded = base64.b64encode(
+            ("{}:{}".format(CLIENT_ID, CLIENT_SECRET)).encode())
         headers = {"Authorization": "Basic {}".format(base64encoded.decode())}
     else:
-        base64encoded = base64.b64encode("{}:{}".format(CLIENT_ID, CLIENT_SECRET))
+        base64encoded = base64.b64encode(
+            "{}:{}".format(CLIENT_ID, CLIENT_SECRET))
         headers = {"Authorization": "Basic {}".format(base64encoded)}
 
     post_request = requests.post(SPOTIFY_TOKEN_URL, data=code_payload,
