@@ -44,7 +44,6 @@ else:
     CLIENT_SIDE_URL = config.CLIENT_SIDE_URL_DEV
     PORT = config.PORT_DEV
 
-
 REDIRECT_URI = "{}:{}/callback/".format(CLIENT_SIDE_URL, PORT)
 SCOPE = "playlist-modify-public playlist-modify-private user-read-recently-played user-top-read"
 STATE = ""
